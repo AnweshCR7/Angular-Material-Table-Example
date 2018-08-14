@@ -1,8 +1,15 @@
 <form [formGroup]="form" (ngSubmit)="submit(form)">
   <h2 mat-dialog-title>{{this.title}}</h2>
   <mat-dialog-content>
-    <input matInput formControlName="first_name" placeholder="What's your name?">
-    <input matInput formControlName="last_name" placeholder="What's your email?">
+    <input matInput formControlName="first_name" placeholder="First name">
+    <input matInput formControlName="last_name" placeholder="Last name">
+    <input matInput formControlName="email" placeholder="Email">
+    <input matInput formControlName="phone" placeholder="Phone">
+    <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    <input matInput formControlName="active" placeholder="active">
+
   </mat-dialog-content>
   <mat-dialog-actions>
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->

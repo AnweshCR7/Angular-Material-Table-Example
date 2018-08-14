@@ -26,8 +26,8 @@ export class DialogService {
     dialogRef = this.dialog.open(DialogComponent);
     dialogRef.componentInstance.title = title;
     dialogRef.componentInstance.action = action;
-    dialogRef.componentInstance.selected_user = user;
-
+    console.log(user);
+    dialogRef.componentInstance.form.setValue(user);
     return dialogRef.afterClosed();
   }
 

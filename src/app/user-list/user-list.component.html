@@ -92,6 +92,15 @@
             </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="Delete">
+                <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
+                <mat-cell *matCellDef="let element" matTooltip="Delete User">
+                        <button mat-icon-button class="delete-btn" (click)="onDelete(element)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                </mat-cell>
+            </ng-container>
+
         <ng-container matColumnDef="Toggle">
             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
             <mat-cell *matCellDef="let element" (click)="onActiveToggle(element.active, element.phone)">
@@ -109,7 +118,7 @@
 </div>
 
 <div *ngIf="noData" class="status-nodata status-msg-info mat-elevation-z2">
-    No Releases found!
+    No Users found!
 </div>
 
 <div *ngIf="errorMsg" class="status-error status-msg-error mat-elevation-z2">

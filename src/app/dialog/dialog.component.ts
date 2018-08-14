@@ -18,7 +18,7 @@ export class DialogComponent {
     //   this.selected_user = {first_name:"",last_name:""};//,email:"",phone:"",dob:"",active:""};
     // }
     this.form = this.formBuilder.group({
-      first_name:"", last_name:""
+      first_name:"", last_name:"", email:'', phone: '', dob: '', active: false, birthDate: '', age:''
     });
   }
 
