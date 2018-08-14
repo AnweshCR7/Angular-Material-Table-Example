@@ -22,7 +22,7 @@ export class UserListComponent extends Base implements OnInit {
 
   ngOnInit() {
     this.getUserData();
-    this.columns = ['Name', 'DOB', 'Age','Email', 'Phone', 'Active', 'Edit', 'Toggle']; //,'Mobile', 'Active', 'Actions'];
+    this.columns = ['Name', 'DOB', 'Age','Email', 'Phone', 'Active', 'Toggle', 'Edit', 'Delete']; //,'Mobile', 'Active', 'Actions'];
   }
 
   applyFilter(filterValue: string) {
@@ -34,10 +34,10 @@ export class UserListComponent extends Base implements OnInit {
     // A write can be made to the object whose 'active' status has changed (key as phone number as it is generally unique)... and
     // Then the data can be fetched anew.
     // console.log(ifActive, key);
-    let myobj = JSON.stringify(this.users);
+    // let myobj = JSON.stringify(this.users);
 
-    localStorage.setItem("myObj", myobj);
-    console.log(localStorage);
+    // localStorage.setItem("myObj", myobj);
+    // console.log(localStorage);
   }
 
   getDateInFormat(user){
@@ -59,7 +59,6 @@ export class UserListComponent extends Base implements OnInit {
   filterPredicate(data, filter) {
     return data.first_name.toLowerCase().includes(filter) || data.last_name.toLowerCase().includes(filter) || 
     data.email.toLowerCase().includes(filter);
-    
   }
 
   getUserDataDone(users) {
@@ -88,20 +87,25 @@ export class UserListComponent extends Base implements OnInit {
   }
 
   onUpdate(selected_user) {
+    // Required to convert date into a standard format so that it can be passed as ipout to the date picker
+    selected_user.birthDate = this.getDateInFormat(selected_user);
     this.dialogService.editUser('Edit-User', 'Update', selected_user)
     .subscribe(res => this.updateDataSource(res));
   }
 
   updateDataSource(edited_user){
-    console.log(edited_user);
+    //console.log(edited_user);
     const user_profiles = this.users;
-    for (let i in user_profiles){
-      if (user_profiles[i].last_name == edited_user.last_name){
+    for (let i in user_profiles) {
+      if (user_profiles[i].phone == edited_user.phone){
         this.users[i].first_name = edited_user.first_name;
-        //this.users[i].last_name = edited_user.last_name;
+        this.users[i].last_name = edited_user.last_name;
+        this.users[i].email = edited_user.email;
+        //this.users[i].dob = Date.UTC(edited_user.birthDate.getUTCFullYear(),
+        //edited_user.birthDate.getUTCMonth(), edited_user.birthDate.getUTCDate());
+        this.users[i].active = edited_user.active;
       }
     }
-    console.log(this.users);
     this.usertable = new MatTableDataSource(this.users);
   }
 
@@ -111,7 +115,14 @@ export class UserListComponent extends Base implements OnInit {
   }
 
   onRefresh() {
-    console.log(this.users);
     this.getUserData();
+  }
+  
+  onDelete(selected_user){
+   this.users = this.users.filter(user => user.phone != selected_user.phone);
+   if(!this.users.length){
+     this.noData = true;
+   }
+   this.usertable = new MatTableDataSource(this.users);
   }
 }

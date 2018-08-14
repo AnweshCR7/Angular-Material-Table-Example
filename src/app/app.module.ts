@@ -20,7 +20,9 @@ import {
   MatInputModule,
   MatButtonModule,
   MatSlideToggleModule,
-  MatDialogModule
+  MatDialogModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 import { DialogComponent } from './dialog/dialog.component';
 import { DialogService } from './dialog/dialog.service';
@@ -48,7 +50,9 @@ import { DialogService } from './dialog/dialog.service';
    MatInputModule,
    MatButtonModule,
    MatSlideToggleModule,
-   MatDialogModule
+   MatDialogModule,
+   MatDatepickerModule,
+   MatNativeDateModule
   ],
   providers: [AppContext, UserService, DialogService],
   entryComponents: [DialogComponent],
