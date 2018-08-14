@@ -93,13 +93,15 @@ export class UserListComponent extends Base implements OnInit {
   }
 
   updateDataSource(edited_user){
+    console.log(edited_user);
     const user_profiles = this.users;
     for (let i in user_profiles){
-      if (user_profiles[i].phone == edited_user.phone){
+      if (user_profiles[i].last_name == edited_user.last_name){
         this.users[i].first_name = edited_user.first_name;
-        this.users[i].last_name = edited_user.last_name;
+        //this.users[i].last_name = edited_user.last_name;
       }
     }
+    console.log(this.users);
     this.usertable = new MatTableDataSource(this.users);
   }
 
