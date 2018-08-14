@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AppContext } from './app-context';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'Grey Atom Assignment';
 }

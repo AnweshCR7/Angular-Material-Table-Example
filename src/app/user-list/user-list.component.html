@@ -1,0 +1,117 @@
+
+<mat-toolbar>
+    Users
+    <button mat-icon-button matTooltip="Refresh Users" (click)="onRefresh()">
+        <mat-icon>refresh</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Add User" (click)="onAdd()">
+        <mat-icon>add</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+</mat-toolbar>
+<br>  
+<div class=" releases-container mat-elevation-z2">
+    <mat-table #table [dataSource]="usertable" matSort>
+        <!-- select column -->
+        <!-- <ng-container matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                </mat-checkbox>
+            </mat-cell>
+        </ng-container> -->
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="Name">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+
+            <mat-cell *matCellDef="let element"> {{element.first_name +" "+ element.last_name}} </mat-cell>
+        </ng-container>
+
+        <!-- BirthDate Column -->
+        <ng-container matColumnDef="DOB">
+            <mat-header-cell *matHeaderCellDef>
+                <div mat-sort-header class="header-name-block">DOB</div>
+                <!-- <mat-form-field *ngIf="showFilters" class="filter-cell">
+                    <input class="filter-input" name="filter-col" [(ngModel)]="ReleaseNumberFilter" matInput type="text" (keyup)="updateFilter('ReleaseNumber',$event.target.value)"
+                    />
+                </mat-form-field> -->
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                {{element.birthDate}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- Age Column -->
+        <ng-container matColumnDef="Age">
+            <mat-header-cell *matHeaderCellDef>
+                <div mat-sort-header class="header-name-block"> Age </div>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                {{element.age}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="Email">
+            <mat-header-cell *matHeaderCellDef>
+                <div mat-sort-header class="header-name-block"> Email </div>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Phone">
+            <mat-header-cell *matHeaderCellDef>
+                <div mat-sort-header class="header-name-block"> Phone </div>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Active">
+            <mat-header-cell *matHeaderCellDef> Active </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <div style='color: green' *ngIf="element.active;else other">
+                  Active
+              </div>
+              <ng-template  #other><span style='color: red'>Inactive</span></ng-template>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Edit">
+            <mat-header-cell *matHeaderCellDef> Edit</mat-header-cell>
+            <mat-cell *matCellDef="let element" matTooltip="Edit User">
+                    <button mat-icon-button (click)="onUpdate(element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Toggle">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let element" (click)="onActiveToggle(element.active, element.phone)">
+                <mat-slide-toggle [(ngModel)]="element.active"><div *ngIf="element.active;else other">De-activate</div> <ng-template #other>Activate</ng-template></mat-slide-toggle>
+            </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    </mat-table>
+</div>
+<div *ngIf="isLoading">
+    <mat-spinner diameter="30" strokeWidth="2" class="center-spinner"></mat-spinner>
+</div>
+
+<div *ngIf="noData" class="status-nodata status-msg-info mat-elevation-z2">
+    No Releases found!
+</div>
+
+<div *ngIf="errorMsg" class="status-error status-msg-error mat-elevation-z2">
+    {{errorMsg}}
+</div>
