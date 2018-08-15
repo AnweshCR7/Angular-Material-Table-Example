@@ -87,7 +87,10 @@ export class UserListComponent extends Base implements OnInit {
   }
 
   onUpdate(selected_user) {
-    // Required to convert date into a standard format so that it can be passed as ipout to the date picker
+    if(!selected_user){
+      return;
+    }
+    // Required to convert date into a standard format so that it can be passed as input to the date picker
     selected_user.birthDate = this.getDateInFormat(selected_user);
     this.dialogService.editUser('Edit-User', 'Update', selected_user)
     .subscribe(res => this.updateDataSource(res));
@@ -101,8 +104,13 @@ export class UserListComponent extends Base implements OnInit {
         this.users[i].first_name = edited_user.first_name;
         this.users[i].last_name = edited_user.last_name;
         this.users[i].email = edited_user.email;
-        //this.users[i].dob = Date.UTC(edited_user.birthDate.getUTCFullYear(),
-        //edited_user.birthDate.getUTCMonth(), edited_user.birthDate.getUTCDate());
+        // we need seconds.
+        this.users[i].dob = (Date.UTC(edited_user.birthDate.getUTCFullYear(),
+        edited_user.birthDate.getUTCMonth(), edited_user.birthDate.getUTCDate())) / 1000;
+        let dt = this.getDateInFormat(this.users[i]);
+        this.users[i].birthDate = dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+        this.users.age = this.currYear - dt.getFullYear();
+        console.log(this.users[i].birthDate);
         this.users[i].active = edited_user.active;
       }
     }
@@ -110,11 +118,23 @@ export class UserListComponent extends Base implements OnInit {
   }
 
   addToDataSource(new_user) {
-    this.users.push(new_user);
-    this.usertable = new MatTableDataSource(this.users);
+    if(!new_user){
+      return;
+    }
+    if(new_user.phone){
+      // This repetitive code should be a function.
+      new_user.dob = (Date.UTC(new_user.birthDate.getUTCFullYear(),
+      new_user.birthDate.getUTCMonth(), new_user.birthDate.getUTCDate())) / 1000;
+      let dt = this.getDateInFormat(new_user);
+      new_user.birthDate = dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+      new_user.age = this.currYear - dt.getFullYear();
+      this.users.push(new_user);
+      this.usertable = new MatTableDataSource(this.users);
+    }
   }
 
   onRefresh() {
+    this.usertable = new MatTableDataSource([]); // to Emulate a refresh look... UI wise
     this.getUserData();
   }
   
