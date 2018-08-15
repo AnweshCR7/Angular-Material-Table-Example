@@ -1,19 +1,75 @@
-<form [formGroup]="form" (ngSubmit)="submit(form)">
-  <h2 mat-dialog-title>{{this.title}}</h2>
+<mat-toolbar color="accent"><h2>{{this.title}}</h2></mat-toolbar>
+<form class="form-container" [formGroup]="form" (ngSubmit)="submit(form)">
+    <mat-error *ngIf="error">
+        {{error}}
+      </mat-error>
   <mat-dialog-content>
-    <input matInput formControlName="first_name" placeholder="First name">
-    <input matInput formControlName="last_name" placeholder="Last name">
-    <input matInput formControlName="email" placeholder="Email">
-    <input matInput formControlName="phone" placeholder="Phone">
-    <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Choose a date">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    <input matInput formControlName="active" placeholder="active">
+    <div class="row-flex">
+      <div class="col-flex">
+      <mat-form-field class="form-element">
+        <input matInput formControlName="first_name" placeholder="First Name">
+      </mat-form-field>
 
+      <mat-form-field class="form-element">
+        <input matInput formControlName="last_name" placeholder="Last name">
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+          <input matInput type="email" formControlName="email" placeholder="Email">
+      </mat-form-field>
+    </div>
+    <div class="col-flex" style="padding-left: 20px">
+      <mat-form-field class="form-element">
+          <input matInput formControlName="phone" placeholder="Phone" required>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+          <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      
+      <div>
+          <span>Active</span>
+          <span><mat-slide-toggle matInput formControlName="active"></mat-slide-toggle></span>
+      </div>  
+    </div>
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions>
+    <div class="controls-block">
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
     <button mat-raised-button color="primary" type="submit">{{this.action}}</button>
     <button mat-button mat-dialog-close>Cancel</button>
+    </div>
   </mat-dialog-actions>
 </form>
+  <!-- </div> -->
+
+
+<!-- <div>
+    <span>First Name</span>:
+    <span><input matInput formControlName="first_name" placeholder="First Name"></span>
+  </div>
+  <div>
+      <span>Last Name</span>:
+      <span><input matInput formControlName="last_name" placeholder="Last name"></span>
+  </div>
+  <div>
+      <span>Email</span>
+      <span><input matInput type="email" formControlName="email" placeholder="Email"></span>
+  </div>
+  <div>
+      <span>Phone No.</span>
+      <span><input matInput formControlName="phone" placeholder="Phone" required></span>
+  </div>
+  <div>
+      <span>Date</span>
+      <span><input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </span>
+  </div>
+  -->
+  
+  
