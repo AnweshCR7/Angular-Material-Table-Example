@@ -2,7 +2,7 @@
     flex-direction: row-reverse;
 }
 .form-container{
-    padding-top: 20px;  
+    padding: 40px;  
 }
 .row-flex{
     display: flex;
@@ -23,8 +23,8 @@ span{
     overflow: hidden;
     min-width: 400px;
 }
- .mat-dialog-container {
-  
+.mat-dialog-container {
+  padding: 0;
 }
 .form-element {
     width: 100%;

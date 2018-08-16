@@ -39,7 +39,7 @@
   <mat-dialog-actions>
     <div class="controls-block">
     <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-    <button mat-raised-button color="primary" type="submit">{{this.action}}</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">{{this.action}}</button>
     <button mat-button mat-dialog-close>Cancel</button>
     </div>
   </mat-dialog-actions>
