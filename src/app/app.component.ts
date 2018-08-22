@@ -7,5 +7,6 @@ import { AppContext } from './app-context';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Grey Atom Assignment';
+  //Head toolbar text
+  title = 'User Table with CRUD operationss';
 }
